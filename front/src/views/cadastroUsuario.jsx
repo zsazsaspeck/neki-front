@@ -9,7 +9,6 @@ import { mensagemSucesso, mensagemErro } from '../components/toastr'
 class CadastroUsuario extends React.Component{
 
     state = {
-        nome : '',
         login: '',
         senha: '',
         senhaRepeticao: ''
@@ -19,7 +18,32 @@ class CadastroUsuario extends React.Component{
             super();
             this.service = new UsuarioService();
         }
+
+        validar(){
+            const msgs = []
+
+            if(!this.state.login){
+                msgs.push("O campo login é obrigatório")
+            }
+
+            if(!this.state.senha || !this.state.senhaRepeticao){
+                msgs.push("digite a senha duas vezes.")
+            } else if(this.state.senha !== this.state.senhaRepeticao){
+                msgs.push('As senhas não conferem')
+
+                return msgs;
+            }
+        }
         cadastrar = () => {
+            const msgs = this.validar();
+
+            if(msgs && msgs.length > 0){
+                msgs.forEach( (msg, index ) => {
+                    mensagemErro(msg)
+                })
+                return false;
+            }
+
             const usuario = {
                 login: this.state.login,
                 senha: this.state.senha
@@ -44,14 +68,7 @@ class CadastroUsuario extends React.Component{
                 <div class="row">
                      <div className="col-lg-12">
                        <div className="bs-component">
-                           <FormGroup label="nome: *" htmlFor="inputNome">
-                               <input type="text"
-                               id="inputNome"
-                               className="form-control"
-                               nome="nome"
-                               onChange={e => this.setState({nome: e.target.value})} />
-
-                           </FormGroup>
+                          
                            <FormGroup label="login: *" htmlFor="inputLogin">
                                <input type="login"
                                id="inputLogin"
