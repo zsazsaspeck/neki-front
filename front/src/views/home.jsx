@@ -1,12 +1,12 @@
 import React from 'react'
 import nekilogo from '../assets/nekilogo.jpg'
+import LocalStorageService from '../app/service/LocalStorageService'
 
 class Home extends React.Component{
 
-    componentDidMount(){
-       const usuarioLogadoString = localStorage.getItem('_usuario_logado')
-       const usuarioLogado = JSON.parse(usuarioLogadoString)
-    }
+   /*componentDidMount(){
+       const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+    }*/
 
     render(){
         return(
